@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:time_tracker_flutter_course2/app/jobs/jobs_page.dart';
+import 'package:time_tracker_flutter_course2/app/home/jobs/jobs_page.dart';
 import 'package:time_tracker_flutter_course2/app/sign_in/sign_in_page.dart';
 import 'package:time_tracker_flutter_course2/services/auth.dart';
 import 'package:time_tracker_flutter_course2/services/database.dart';
