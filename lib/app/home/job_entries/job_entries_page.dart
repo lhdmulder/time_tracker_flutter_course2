@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker_flutter_course2/app/home/job_entries/entry_list_item.dart';
 import 'package:time_tracker_flutter_course2/app/home/job_entries/entry_page.dart';
+import 'package:time_tracker_flutter_course2/app/home/job_entries/entry_page_ct.dart';
 import 'package:time_tracker_flutter_course2/app/home/jobs/edit_job_page.dart';
 import 'package:time_tracker_flutter_course2/app/home/jobs/list_items_builder.dart';
 import 'package:time_tracker_flutter_course2/app/home/models/entry.dart';
@@ -48,12 +49,12 @@ class JobEntriesPage extends StatelessWidget {
         elevation: 2.0,
         title: Text(job.name),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(
               'Edit',
               style: TextStyle(fontSize: 18.0, color: Colors.white),
             ),
-            onPressed: () => EditJobPage.show(context, job: job),
+            onPressed: () => EditJobPage.show(context, database: database ,job: job),
           ),
         ],
       ),
@@ -61,7 +62,7 @@ class JobEntriesPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () =>
-            EntryPage.show(context: context, database: database, job: job),
+            EntryPageCT.show(context: context, database: database, job: job),
       ),
     );
   }
@@ -78,7 +79,7 @@ class JobEntriesPage extends StatelessWidget {
               entry: entry,
               job: job,
               onDismissed: () => _deleteEntry(context, entry),
-              onTap: () => EntryPage.show(
+              onTap: () => EntryPageCT.show(
                 context: context,
                 database: database,
                 job: job,

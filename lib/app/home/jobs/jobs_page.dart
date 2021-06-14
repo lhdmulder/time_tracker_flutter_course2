@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:time_tracker_flutter_course2/app/home/job_entries/job_entries_page.dart';
 import 'package:time_tracker_flutter_course2/app/home/jobs/edit_job_page.dart';
 import 'package:time_tracker_flutter_course2/app/home/jobs/job_list_tile.dart';
 import 'package:time_tracker_flutter_course2/app/home/jobs/list_items_builder.dart';
@@ -62,7 +63,7 @@ showExceptionAlertDialog(context, title: 'Delete failed', exception: e);
       ),
       body: _buildContents(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => EditJobPage.show(context),
+        onPressed: () => EditJobPage.show(context, database: Provider.of<Database>(context, listen: false)),
         child: Icon(Icons.add),
       ),
     );
@@ -82,9 +83,9 @@ showExceptionAlertDialog(context, title: 'Delete failed', exception: e);
             onDismissed: (direction) => _delete(context,job),
             child: JobListTile(
               job: job,
-              onTap: () => EditJobPage.show(
+              onTap: () => JobEntriesPage.show(
                 context,
-                job: job,
+               job,
               ),
             ),
           ),

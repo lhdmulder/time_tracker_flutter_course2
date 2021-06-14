@@ -6,11 +6,12 @@ import 'package:time_tracker_flutter_course2/common_widgets/date_time_picker.dar
 import 'package:time_tracker_flutter_course2/app/home/job_entries/format.dart';
 import 'package:time_tracker_flutter_course2/app/home/models/entry.dart';
 import 'package:time_tracker_flutter_course2/app/home/models/job.dart';
+import 'package:time_tracker_flutter_course2/common_widgets/date_time_picker_ct.dart';
 import 'package:time_tracker_flutter_course2/common_widgets/show_exception_alert_dialog.dart';
 import 'package:time_tracker_flutter_course2/services/database.dart';
 
-class EntryPage extends StatefulWidget {
-  const EntryPage({@required this.database, @required this.job, this.entry});
+class EntryPageCT extends StatefulWidget {
+  const EntryPageCT({@required this.database, @required this.job, this.entry});
   final Database database;
   final Job job;
   final Entry entry;
@@ -20,42 +21,36 @@ class EntryPage extends StatefulWidget {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) =>
-            EntryPage(database: database, job: job, entry: entry),
+            EntryPageCT(database: database, job: job, entry: entry),
         fullscreenDialog: true,
       ),
     );
   }
 
   @override
-  State<StatefulWidget> createState() => _EntryPageState();
+  State<StatefulWidget> createState() => _EntryPageCTState();
 }
 
-class _EntryPageState extends State<EntryPage> {
-  DateTime _startDate;
-  TimeOfDay _startTime;
-  DateTime _endDate;
-  TimeOfDay _endTime;
+class _EntryPageCTState extends State<EntryPageCT> {
+  DateTime _startDateTime;
+  DateTime _endDateTime;
   String _comment;
 
   @override
   void initState() {
     super.initState();
     final start = widget.entry?.start ?? DateTime.now();
-    _startDate = DateTime(start.year, start.month, start.day);
-    _startTime = TimeOfDay.fromDateTime(start);
+    _startDateTime = start;
 
     final end = widget.entry?.end ?? DateTime.now();
-    _endDate = DateTime(end.year, end.month, end.day);
-    _endTime = TimeOfDay.fromDateTime(end);
+    _endDateTime = end;
 
     _comment = widget.entry?.comment ?? '';
   }
 
   Entry _entryFromState() {
-    final start = DateTime(_startDate.year, _startDate.month, _startDate.day,
-        _startTime.hour, _startTime.minute);
-    final end = DateTime(_endDate.year, _endDate.month, _endDate.day,
-        _endTime.hour, _endTime.minute);
+    final start = _startDateTime;
+    final end = _endDateTime;
     final id = widget.entry?.id ?? documentIdFromCurrentDate();
     return Entry(
       id: id,
@@ -117,22 +112,18 @@ class _EntryPageState extends State<EntryPage> {
   }
 
   Widget _buildStartDate() {
-    return DateTimePicker(
+    return DateTimePickerCT(
       labelText: 'Start',
-      selectedDate: _startDate,
-      selectedTime: _startTime,
-      onSelectedDate: (date) => setState(() => _startDate = date),
-      onSelectedTime: (time) => setState(() => _startTime = time),
+      selectedDateTime: _startDateTime,
+      onSelectedDateTime: (datetime) => setState(() => _startDateTime = datetime),
     );
   }
 
   Widget _buildEndDate() {
-    return DateTimePicker(
+    return DateTimePickerCT(
       labelText: 'End',
-      selectedDate: _endDate,
-      selectedTime: _endTime,
-      onSelectedDate: (date) => setState(() => _endDate = date),
-      onSelectedTime: (time) => setState(() => _endTime = time),
+      selectedDateTime: _endDateTime,
+      onSelectedDateTime: (datetime) => setState(() => _endDateTime = datetime),
     );
   }
 

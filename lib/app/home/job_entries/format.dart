@@ -12,6 +12,10 @@ class Format {
     return DateFormat.yMMMd().format(date);
   }
 
+  static String dateTime(DateTime date) {
+    return '${DateFormat.yMMMd().format(date)}   ${DateFormat.jm().format(date)}';
+  }
+
   static String dayOfWeek(DateTime date) {
     return DateFormat.E().format(date);
   }
