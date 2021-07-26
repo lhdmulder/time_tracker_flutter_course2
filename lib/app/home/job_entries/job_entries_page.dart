@@ -35,7 +35,7 @@ class JobEntriesPage extends StatelessWidget {
     } on FirebaseException catch (e) {
       showExceptionAlertDialog(
         context,
-        title: 'Operation failed',
+        title: 'Operations failed',
         exception: e,
       );
     }
