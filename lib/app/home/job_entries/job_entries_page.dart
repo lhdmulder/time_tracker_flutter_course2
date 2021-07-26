@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker_flutter_course2/app/home/job_entries/entry_list_item.dart';
-import 'package:time_tracker_flutter_course2/app/home/job_entries/entry_page.dart';
 import 'package:time_tracker_flutter_course2/app/home/job_entries/entry_page_ct.dart';
 import 'package:time_tracker_flutter_course2/app/home/jobs/edit_job_page.dart';
 import 'package:time_tracker_flutter_course2/app/home/jobs/list_items_builder.dart';
@@ -44,26 +43,33 @@ class JobEntriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 2.0,
-        title: Text(job.name),
-        actions: <Widget>[
-          TextButton(
-            child: Text(
-              'Edit',
-              style: TextStyle(fontSize: 18.0, color: Colors.white),
-            ),
-            onPressed: () => EditJobPage.show(context, database: database ,job: job),
+    return StreamBuilder<Job>(
+      stream: database.jobStream(job.id),
+      builder: (context, snapshot) {
+        final job=snapshot.data;
+        final jobName = job?.name ?? '';
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 2.0,
+            title: Text(jobName),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'Edit',
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+                onPressed: () => EditJobPage.show(context, database: database ,job: job),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: _buildContent(context, job),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () =>
-            EntryPageCT.show(context: context, database: database, job: job),
-      ),
+          body: _buildContent(context, job),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () =>
+                EntryPageCT.show(context: context, database: database, job: job),
+          ),
+        );
+      }
     );
   }
 

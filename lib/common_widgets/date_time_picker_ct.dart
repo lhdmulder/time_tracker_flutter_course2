@@ -1,4 +1,4 @@
-import 'dart:async';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,7 +78,7 @@ class _BottomPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 216,
+      height: 200,
       padding: const EdgeInsets.only(top: 6),
       margin: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
